@@ -23,7 +23,7 @@ const Dealer = () => {
   let dealer_url = root_url+`djangoapp/dealer/${id}`;
   let reviews_url = root_url+`djangoapp/reviews/dealer/${id}`;
   let post_review = root_url+`postreview/${id}`;
-  
+  console.log(dealer_url, reviews_url, post_review);
   const get_dealer = async ()=>{
     const res = await fetch(dealer_url, {
       method: "GET"
@@ -31,7 +31,8 @@ const Dealer = () => {
     const retobj = await res.json();
     
     if(retobj.status === 200) {
-      setDealer(retobj.dealer)
+      console.log(retobj);
+      setDealer(retobj.dealer[0]);
     }
   }
 
@@ -58,6 +59,7 @@ const Dealer = () => {
   useEffect(() => {
     get_dealer();
     get_reviews();
+
     if(sessionStorage.getItem("username")) {
       setPostReview(<a href={post_review}><img src={review_icon} style={{width:'10%',marginLeft:'10px',marginTop:'10px'}} alt='Post Review'/></a>)
 
